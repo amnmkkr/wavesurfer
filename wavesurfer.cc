@@ -1,4 +1,4 @@
-// wavebard.cc - WAVEBARD: Bastl Instruments' Kastle 2 Wave Bard sample player (Vaclav Mach, Marek Mach; MIT:
+// wavesurfer.cc - WAVESURFER: Bastl Instruments' Kastle 2 Wave Bard sample player (Vaclav Mach, Marek Mach; MIT:
 // LICENSE.kastle2; github.com/bastl-instruments/kastle2, code/src/apps/WaveBard, kept unchanged in third_party/kastle2)
 // as a Plugin API 3 user machine (sdk/rmp/rmp_api3.h), stereo, 48 kHz, playing the project's pool samples.
 //   SRC page   P1 SMPL  the sample in the bank (Wave Bard's Sample pot)

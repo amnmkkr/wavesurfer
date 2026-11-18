@@ -1,4 +1,4 @@
-// tests/host.cc - drives wavebard.cc as the Pi's API 3 host drives a machine (an arena, 12-frame blocks, stereo out,
+// tests/host.cc - drives wavesurfer.cc as the Pi's API 3 host drives a machine (an arena, 12-frame blocks, stereo out,
 // b->p, the transport, note_on per trig, the pool through pool_info/pool_read: the first ask for a slot answers
 // NOT_READY, then its frames as 16-bit mono, as the Pi's sample RAM holds them) and renders tests/wav/*.wav from the
 // test kit (tests/kit, made by make_kit.py: pool slots 1..8 = pluck, kick, snare, bell, vox, pad, bass, hat; 9 a sung

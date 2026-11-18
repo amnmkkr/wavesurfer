@@ -1,13 +1,13 @@
 {
-  "id": "wavebard",
+  "id": "wavesurfer",
   "version": "1.0.0",
   "compatible_from": "1.0.0",
-  "name": "WAVEBARD",
-  "short": "WBRD",
+  "name": "WAVESURFER",
+  "short": "WSRF",
   "licence": "MIT (DSP: Kastle 2 Wave Bard by Bastl)",
   "pitch": "note",
   "page2": "params",
-  "page2_title": "WAVEBARD MORE",
+  "page2_title": "WAVESURF MORE",
   "knobs": [
     {
       "p": 1,

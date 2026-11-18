@@ -1,10 +1,10 @@
-WAVEBARD - notices
+WAVESURFER - notices
 
-WAVEBARD is Bastl Instruments' Kastle 2 Wave Bard (Vaclav Mach, Marek Mach) ported to the Pi Sidecar as a user machine.
+WAVESURFER is Bastl Instruments' Kastle 2 Wave Bard (Vaclav Mach, Marek Mach) ported to the Pi Sidecar as a user machine.
 Wave Bard and the Kastle 2 code: Copyright (c) 2023-2025 Bastl Instruments, MIT (LICENSE.kastle2). Kept unchanged in
 third_party/kastle2 (VENDORED.md has the commit and the files). Bastl's sample bank (SAMPLES.bin) is not included.
 
-The port: wavebard.cc, shim/ (the Kastle platform as Wave Bard uses it; shim/common/core/UserDataFile.hpp and
+The port: wavesurfer.cc, shim/ (the Kastle platform as Wave Bard uses it; shim/common/core/UserDataFile.hpp and
 shim/common/dsp/sampling/SamplePlayer.hpp are Bastl's files with one change each, MIT), mathshim.c, resample_taps.h and
 make_taps.py, the tests (with their synthesized test samples: CC0), manifest.json and build.sh: MIT, Copyright 2026
 amnmkkr (LICENSE).
@@ -12,5 +12,5 @@ amnmkkr (LICENSE).
 sdk/ and tools/rmp_pack.py are the Sidecar plugin SDK (trigcondition and contributors), copied unchanged from
 https://github.com/trigcondition/sidecar-firmware; they are used to build the package.
 
-"Bastl", "Kastle" and "Wave Bard" are Bastl Instruments' names, used to credit where the code comes from; WAVEBARD is
+"Bastl", "Kastle" and "Wave Bard" are Bastl Instruments' names, used to credit where the code comes from; WAVESURFER is
 not made or endorsed by Bastl Instruments.

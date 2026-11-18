@@ -1,12 +1,12 @@
 #!/bin/bash
-# Build WAVEBARD for the Pi Sidecar: wavebard.a64.rmp (an RMPA package, AArch64), and the tests.
+# Build WAVESURFER for the Pi Sidecar: wavesurfer.a64.rmp (an RMPA package, AArch64), and the tests.
 # Needs aarch64-linux-gnu-gcc / g++ and python3; the tests also qemu-user-static (they run as AArch64, as the Pi does).
 #   bash build.sh         the package
 #   bash build.sh test    also tests/wav/*.wav and the stress tests
 set -e
 cd "$(dirname "$0")"
 K=third_party/kastle2/code/src
-SRCS="wavebard.cc $K/apps/WaveBard/AppWaveBard.cpp $K/common/controls/FancyPot.cpp $K/common/core/midi/Message.cpp
+SRCS="wavesurfer.cc $K/apps/WaveBard/AppWaveBard.cpp $K/common/controls/FancyPot.cpp $K/common/core/midi/Message.cpp
   $K/common/dsp/control/AdsrEnv.cpp $K/common/dsp/control/EnvelopeFollower.cpp $K/common/dsp/effects/HardClipper.cpp
   $K/common/dsp/effects/SoftClipper.cpp $K/common/dsp/filters/DjFilterStereo.cpp $K/common/dsp/filters/SvfStereo.cpp $K/common/dsp/filters/Svf.cpp
   $K/common/dsp/synthesis/Oscillator.cpp $K/common/dsp/utility/Quantizer.cpp"
@@ -26,9 +26,9 @@ ${A64}gcc -mcpu=cortex-a72 -O2 -fno-pic -fno-pie -mcmodel=small -ffixed-x18 -mno
   -fdata-sections -fno-stack-protector -ffreestanding -fno-builtin -c mathshim.c -o $B/mathshim.o
 ${A64}g++ $FLAGS -c sdk/rmp/shim/rmp_cxx.cpp -o $B/rmp_cxx.o
 ${A64}g++ $FLAGS -static -nostdlib -nostartfiles -Wl,--emit-relocs -Wl,--gc-sections -Wl,-z,max-page-size=4096 \
-  -Wl,--no-warn-rwx-segments -Wl,-T,sdk/rmp/plugin_a64.ld -o build/wavebard.elf $B/*.o -lgcc
-python3 tools/rmp_pack.py build/wavebard.elf manifest.json wavebard.a64.rmp
-echo "Built wavebard.a64.rmp"
+  -Wl,--no-warn-rwx-segments -Wl,-T,sdk/rmp/plugin_a64.ld -o build/wavesurfer.elf $B/*.o -lgcc
+python3 tools/rmp_pack.py build/wavesurfer.elf manifest.json wavesurfer.a64.rmp
+echo "Built wavesurfer.a64.rmp"
 
 if [ "$1" = test ]; then
   H=build/arm

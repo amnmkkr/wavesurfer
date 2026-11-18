@@ -1,4 +1,4 @@
-# WAVEBARD
+# WAVESURFER
 
 Bastl Instruments' **Kastle 2 Wave Bard** sample player as a user machine for
 [Sidecar](https://github.com/trigcondition/sidecar-firmware) (the Analog Rytm expander): a Pi `.rmp` machine, stereo
@@ -6,14 +6,14 @@ out, playing the project's sample pool. Made for vocals and chops as much as for
 
 Not made or endorsed by Bastl Instruments.
 
-- Id `wavebard`, version 1.0.0, plugin API 3 (a machine), 48 kHz
+- Id `wavesurfer`, version 1.0.0, plugin API 3 (a machine), 48 kHz
 - Board: Pi (built for the Pi 4 and 5; tested on a Pi 5)
 - Licence: MIT
 
 ## Install
 
-Copy `wavebard.a64.rmp` into `/Plugins` on the Sidecar's SD card and restart, put WAVEBARD on a user slot (U1..U5)
-on the USER SLOTS page, and pick that slot in a track's machine list (that gives the track a WAVEBARD sound: save the
+Copy `wavesurfer.a64.rmp` into `/Plugins` on the Sidecar's SD card and restart, put WAVESURFER on a user slot (U1..U5)
+on the USER SLOTS page, and pick that slot in a track's machine list (that gives the track a WAVESURFER sound: save the
 kit). Samples come from the project's SAMPLES pool, bank A (files under `/Samples`).
 
 ## Knobs
@@ -47,14 +47,14 @@ above 0.8.
 Wave Bard's own code (`AppWaveBard`: Init, AudioLoop, its second core's FX, UiLoop, its parameter maps) and the Kastle 2
 DSP library run unchanged at the Kastle's 44 kHz in its 48-sample blocks, then 12/11 up to 48 kHz. Its sample file is a
 virtual one whose samples are pool rows, read with the plugin API's `pool_read`; the Sidecar keeps one pool sample
-ready per voice, so WAVEBARD asks only for the one it plays next and a trig waits (13 ms at most) until it is ready.
+ready per voice, so WAVESURFER asks only for the one it plays next and a trig waits (13 ms at most) until it is ready.
 A trig is the Kastle's trigger with its note on the pitch CV (1 V/oct) and its velocity on the sample CV. The Kastle's
 platform is global, and the Pi renders two cores of voices at once: Wave Bard runs under one lock, each voice with its
 own copy of it.
 
 ## Build
 
-`bash build.sh` (aarch64-linux-gnu-gcc / g++ 13.3.0, python3) makes `wavebard.a64.rmp`. `bash build.sh test` also
+`bash build.sh` (aarch64-linux-gnu-gcc / g++ 13.3.0, python3) makes `wavesurfer.a64.rmp`. `bash build.sh test` also
 makes the test kit's renders in `tests/wav` (run `python3 make_kit.py` and `python3 make_phrase.py` in `tests` once
 first; needs qemu-user-static): a melody, a beat from sample locks, pitch, length and reverse, the FX and filter, the
 quantizer, velocity, vocal phrases and chops, a gain check and a stress test (two voices, random trigs and knobs).
