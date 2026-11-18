@@ -1,0 +1,5 @@
+build/
+tests/wav/
+*.rmp
+__pycache__/
+tests/kit/

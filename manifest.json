@@ -1,0 +1,200 @@
+{
+  "id": "wavebard",
+  "version": "1.0.0",
+  "compatible_from": "1.0.0",
+  "name": "WAVEBARD",
+  "short": "WBRD",
+  "licence": "MIT (DSP: Kastle 2 Wave Bard by Bastl)",
+  "pitch": "note",
+  "page2": "params",
+  "page2_title": "WAVEBARD MORE",
+  "knobs": [
+    {
+      "p": 1,
+      "long": "Sample",
+      "short": "SMPL",
+      "look": "dial",
+      "text": "number",
+      "default": 0
+    },
+    {
+      "p": 2,
+      "long": "Pitch",
+      "short": "PTCH",
+      "look": "centred",
+      "text": "bipolar",
+      "default": 64
+    },
+    {
+      "p": 3,
+      "long": "Length",
+      "short": "LEN",
+      "look": "centred",
+      "text": "bipolar",
+      "default": 127
+    },
+    {
+      "p": 4,
+      "long": "Bank",
+      "short": "BANK",
+      "look": "list",
+      "text": "enum",
+      "names": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16"
+      ],
+      "default": 0
+    },
+    {
+      "p": 5,
+      "long": "FX",
+      "short": "FX",
+      "look": "centred",
+      "text": "bipolar",
+      "default": 64
+    },
+    {
+      "p": 6,
+      "long": "Filter",
+      "short": "FILT",
+      "look": "centred",
+      "text": "bipolar",
+      "default": 64
+    },
+    {
+      "p": 7,
+      "long": "Scale",
+      "short": "SCAL",
+      "look": "list",
+      "text": "enum",
+      "names": [
+        "MINCHRD",
+        "MINPENT",
+        "MINOR",
+        "CHROM",
+        "MAJOR",
+        "MAJPENT",
+        "MAJCHRD"
+      ],
+      "default": 64
+    },
+    {
+      "p": 8,
+      "long": "Root",
+      "short": "ROOT",
+      "look": "list",
+      "text": "enum",
+      "names": [
+        "C",
+        "C#",
+        "D",
+        "D#",
+        "E",
+        "F",
+        "F#",
+        "G",
+        "G#",
+        "A",
+        "A#",
+        "B"
+      ],
+      "default": 0
+    },
+    {
+      "p": 9,
+      "long": "Fine",
+      "short": "FINE",
+      "look": "centred",
+      "text": "bipolar",
+      "default": 64
+    },
+    {
+      "p": 10,
+      "long": "Note Track",
+      "short": "TRCK",
+      "look": "centred",
+      "text": "bipolar",
+      "default": 127
+    },
+    {
+      "p": 11,
+      "long": "Vel>Sample",
+      "short": "VSMP",
+      "look": "centred",
+      "text": "bipolar",
+      "default": 64
+    },
+    {
+      "p": 12,
+      "long": "Vel>Level",
+      "short": "VLEV",
+      "look": "dial",
+      "text": "number",
+      "default": 0
+    },
+    {
+      "p": 13,
+      "long": "First Slot",
+      "short": "FRST",
+      "look": "dial",
+      "text": "pool",
+      "default": 1
+    },
+    {
+      "p": 14,
+      "long": "Bank Size",
+      "short": "SIZE",
+      "look": "list",
+      "text": "enum",
+      "names": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16"
+      ],
+      "default": 60
+    },
+    {
+      "p": 15,
+      "long": "Tune",
+      "short": "TUNE",
+      "look": "centred",
+      "text": "bipolar",
+      "default": 64
+    },
+    {
+      "p": 16,
+      "long": "Start",
+      "short": "STRT",
+      "look": "dial",
+      "text": "number",
+      "default": 0
+    }
+  ]
+}
