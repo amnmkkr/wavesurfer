@@ -6,7 +6,7 @@ out, playing the project's sample pool. Made for vocals and chops as much as for
 
 Not made or endorsed by Bastl Instruments.
 
-- Id `wavesurfer`, version 1.0.0, plugin API 3 (a machine), 48 kHz
+- Id `wavesurfer`, version 1.0.1, plugin API 3 (a machine), 48 kHz
 - Board: Pi (built for the Pi 4 and 5; tested on a Pi 5)
 - Licence: MIT
 
@@ -15,6 +15,10 @@ Not made or endorsed by Bastl Instruments.
 Copy `wavesurfer.a64.rmp` into `/Plugins` on the Sidecar's SD card and restart, put WAVESURFER on a user slot (U1..U5)
 on the USER SLOTS page, and pick that slot in a track's machine list (that gives the track a WAVESURFER sound: save the
 kit). Samples come from the project's SAMPLES pool, bank A (files under `/Samples`).
+
+## Samples
+
+**Keep samples under 12 MB and under 60 seconds.** Longer or bigger files take long, heavy reads from the card, and on the user's Pi 5 those went with USB drops and resets of the Sidecar (firmware 0.5.1). Trim long loops before putting them in the pool.
 
 ## Knobs
 
@@ -41,6 +45,12 @@ Lock STRT per step to chop a vocal phrase. Keep PTCH centred and transpose with 
 more turns Wave Bard's quantizer on (its design), and PTCH then moves in octaves. Trigs closer than 20 ms are ignored,
 and a trig is ignored while a sample plays backwards (Wave Bard's). The output is Wave Bard's +3 dB, with a soft knee
 above 0.8.
+
+## Changes in 1.0.1
+
+A sample is asked for (and so loaded from the card by the Sidecar) only when a trig comes in, or for the one playing.
+In 1.0.0 the knobs asked for their sample between hits too, so an LFO on SMPL, BANK, FRST or SIZE had the Sidecar
+loading several samples a second. Saved projects play as before.
 
 ## How it runs
 

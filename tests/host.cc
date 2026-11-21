@@ -165,8 +165,29 @@ static void report(const char* name, const Res& r) {
 static float smpl(int n, int size = 8) { return (n + 0.5f) * 127.0f / size; }
 
 int main() {
+  const bool want_crash = getenv("CRASH") != nullptr; (void)want_crash;
   system("mkdir -p wav");
   load_kit();
+  // crash checks (CRASH=seconds): a huge sample (4M frames) and the kit, two voices, trigs every 5..60 ms, every knob
+  // jumping or stepping like a fast LFO, sample switching on most hits
+  if (getenv("CRASH")) {
+    const double secs = atof(getenv("CRASH"));
+    g_pool[20].assign(4000000, 0.0f);
+    for (size_t i = 0; i < g_pool[20].size(); ++i) g_pool[20][i] = 0.3f * sinf((float)i * 0.01f);
+    g_pool[21] = g_pool[9];
+    std::vector<Trig> tr; std::vector<Knob> kn;
+    srand(77);
+    for (double t = 0.05; t < secs; t += 0.005 + (rand() % 56) * 0.001) tr.push_back({t, (float)(rand() % 128), (rand() % 128) / 127.0f});
+    for (double t = 0.01; t < secs; t += 0.002) {
+      const int p = 1 + rand() % 16;
+      float v = (float)(rand() % 128) + (rand() % 128) / 128.0f;
+      if (p == 13) v = (float)(1 + rand() % 22);
+      kn.push_back({t, p, v});
+    }
+    Res r = run(secs, tr, kn, 60.0 + rand() % 180, 2);
+    printf("crash check: %.0f s, %zu trigs, %zu knob moves: peak %.3f, nan %d\n", secs, tr.size(), kn.size(), r.peak, r.nan);
+    return r.nan ? 1 : 0;
+  }
   const double pre = 0.25;   // the pool asked before the first trig (a project loaded)
   const double bpm = 120.0, st = step_s(bpm);
 
@@ -281,6 +302,15 @@ int main() {
     std::vector<Knob> kn = with(V, {{-1, 3, 0}, {pre + 3.4, 5, 100}});
     for (int i = 0; i <= 60; ++i) kn.push_back({pre + 7.0 + i * 0.05, 6, 64.0f + i * 1.0f});
     report("12_vocal_reverse_chorus_filter", run(pre + 10.5, tr, kn));
+  }
+  // an LFO on SMPL between hits (a step every 20 ms over the 8 kit samples), a hit every 0.5 s: the Sidecar should be
+  // asked for a new sample only at the hits (the pool's slot switches printed above this line)
+  {
+    std::vector<Trig> tr; std::vector<Knob> kn;
+    for (int i = 0; i < 16; ++i) tr.push_back({pre + i * 0.5, 60, 0.8f});
+    for (int i = 0; i < 400; ++i) kn.push_back({pre + i * 0.02, 1, (float)((i * 37) % 128)});
+    Res r = run(pre + 8.5, tr, kn);
+    report("17_lfo_on_smpl_hits", r);
   }
   // gain: a 440 Hz sine at 0.25 (-12 dBFS) in slot 20, played at the defaults: the level out
   {

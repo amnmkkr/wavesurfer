@@ -170,6 +170,7 @@ struct State {
   int want;                        // the slot asked for
   int ready;                       // the slot pool_info last answered OK (0 none)
   uint32_t trig_wait;              // Wave Bard blocks a trig has waited for its sample
+  int trig_slot;                   // the slot that trig plays, taken as it comes in
   int first, size;                 // the mapping in use
   float start;                     // the start point in use (0..1 of a sample), taken at each trig
 };
@@ -383,8 +384,8 @@ void set_cvs(State* s) {
 
 // One Wave Bard block (under the lock): this voice's platform in, AudioLoop, then UiLoop twice (on the Kastle UiLoop
 // is the main loop and runs many times between blocks: the run after a trig reads its CVs), the platform out
-void run_block(State* s) {
-  // a new trig: the trigger input high for one block (low for one first if it was high)
+// a new trig (from note_on): its note and velocity on the CVs, the start point; it then waits for its sample
+void take_trig(State* s) {
   if (s->trig_seen != __atomic_load_n(&s->trig_seq, __ATOMIC_ACQUIRE)) {
     s->trig_seen = s->trig_seq;
     s->note_cv = s->trig_note;
@@ -393,16 +394,21 @@ void run_block(State* s) {
     s->trig_waiting = true;
     s->trig_wait = 0;
     set_cvs(s);
+    s->trig_slot = predicted_slot(s);
     const float start = clampf(s->p[P_STRT], 0.0f, 127.0f) / 128.0f;
     if (start != s->start) {
       s->start = start;
       apply_mapping(s, true);
     }
   }
+}
+
+void run_block(State* s) {
+  // a trig: the trigger input high for one block (low for one first if it was high)
   // the trig waits (13 ms at most) until the Sidecar has its sample ready, so it starts on its first frame
   bool go = false;
   if (s->trig_waiting && !s->trig_high) {
-    const int slot = predicted_slot(s);
+    const int slot = s->trig_slot;
     go = s->ready == slot || slot > 127 || s->pool[slot].empty || s->trig_wait >= 12;
     ++s->trig_wait;
   }
@@ -566,9 +572,15 @@ void c_render(void* st, const rmp3_block* b) {
   set_knobs(s);
   apply_mapping(s);
   s->app->bank_select_.Set((uint32_t)bank_of(s->p));
+  // The sample asked for: a trig's (as it comes in), else the playing one's. Between hits the knobs (or an LFO on
+  // SMPL, BANK, FRST or SIZE) ask for nothing: every new slot asked makes the Sidecar load a sample from the card, and
+  // an LFO switching samples between hits had it loading several a second. Before the first trig: the knobs' sample.
+  take_trig(s);
   {
     const int playing = playing_slot(s);
-    s->want = (s->trig_waiting || !playing) ? predicted_slot(s) : playing;
+    if (s->trig_waiting) s->want = s->trig_slot;
+    else if (s->want == 0) s->want = predicted_slot(s);
+    else if (playing) s->want = playing;
   }
   poll_pool(s);
   const rmp3_transport* t = b->transport;
